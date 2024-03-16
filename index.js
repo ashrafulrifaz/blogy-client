@@ -93,7 +93,7 @@ async function run() {
       }
     })
 
-    app.put('/:id', async(req, res) => {
+    app.patch('/posts/:id', async(req, res) => {
       const id = req.params.id;
       const updatePost = req.body
       const filter = {_id: new ObjectId(id)}
