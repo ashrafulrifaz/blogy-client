@@ -23,9 +23,15 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     // await client.connect();
 
+    const viewCollection = client.db('postsDB').collection('pageView')
     const postCollection = client.db('postsDB').collection('posts')
     const categoriesCollection = client.db('postsDB').collection('categories')
     const usersCollection = client.db('postsDB').collection('users')
+
+    app.get('/user-visited', async(req, res) => {
+      const result = await viewCollection.find().toArray() 
+      res.send(result)
+    })
 
     app.get('/posts', async(req, res) => {
       const result = await postCollection.find().toArray()
@@ -67,6 +73,12 @@ async function run() {
       const id = req.params.id;
       const filter = {_id: new ObjectId(id)}
       const result = await postCollection.findOne(filter)
+      res.send(result)
+    })
+
+    app.post('/user-visited', async(req, res) => {
+      const view = req.body
+      const result = await viewCollection.insertOne(view)
       res.send(result)
     })
 
