@@ -47,7 +47,7 @@ async function run() {
       const email = req.params.email
       const filter = {email: email}
       const result = await usersCollection.findOne(filter)
-      res.send({role: result?.role})
+      res.send(result)
     })
     
     app.get('/categories', async(req, res) => {
